@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { Copany } from "@/types/types";
 import { useState } from "react";
-import { getCopanies } from "@/services/copanyFuncs";
+import { deleteCopany, getCopanies } from "@/services/copanyFuncs";
 
 export default function CopanyList() {
   const [copanies, setCopanies] = useState<Copany[]>([]);
@@ -10,18 +10,6 @@ export default function CopanyList() {
     "loading"
   );
   const [error, setError] = useState<string | null>(null);
-
-  // const handleEdit = (id: number) => {
-  //   const copanyToEdit = copanies.find((c) => c.id === id);
-  //   if (copanyToEdit) {
-  //     dispatch(setEditingCopany(copanyToEdit));
-  //     router.push("/create");
-  //   }
-  // };
-
-  // const handleDelete = (id: number) => {
-  //   dispatch(deleteCopany(id));
-  // };
 
   useEffect(() => {
     getCopanies()
@@ -96,17 +84,21 @@ export default function CopanyList() {
             </div>
 
             {/* <button
-              onClick={() => handleEdit(copany.id)}
+              onClick={async () => {
+                await handleEdit(copany.id);
+              }}
               className="text-black hover:text-gray-800 transition-colors cursor-pointer"
             >
               edit
-            </button>
+            </button> */}
             <button
-              onClick={() => handleDelete(copany.id)}
+              onClick={async () => {
+                await deleteCopany(copany.id);
+              }}
               className="text-black hover:text-gray-800 transition-colors cursor-pointer mx-2"
             >
               delete
-            </button> */}
+            </button>
           </li>
         ))}
       </ul>
