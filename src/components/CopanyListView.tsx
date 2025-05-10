@@ -9,7 +9,7 @@ import {
 } from "@/services/copanyFuncs";
 import { useSession, signIn } from "next-auth/react";
 
-export default function CopanyList() {
+export default function CopanyListView() {
   const [copanies, setCopanies] = useState<Copany[]>([]);
   const [status, setStatus] = useState<"loading" | "failed" | "success">(
     "loading"
@@ -45,6 +45,47 @@ export default function CopanyList() {
       });
   }, []);
 
+  async function handleCreateCopany(formData: FormData) {
+    console.log("handleCreateCopany");
+    console.log(formData);
+    if (!session?.user?.id) {
+      console.log("Signing in");
+      await signIn();
+      return;
+    }
+    await createCopany({
+      name: "Test Copany",
+      description: "Test Description",
+      github_url: "https://github.com/test.com",
+      created_by: session.user.id,
+      project_type: "Test Project Type",
+      project_stage: "Test Project Stage",
+      main_language: "Test Main Language",
+      license: "Test License",
+    });
+    const copanies = await getCopanies();
+    const typedCopanies: Copany[] = copanies.map((copany) => {
+      const item: Copany = {
+        id: Number(copany.id),
+        github_url: String(copany.github_url),
+        name: String(copany.name),
+        description: String(copany.description),
+        created_by: String(copany.created_by),
+        project_type: String(copany.project_type),
+        project_stage: String(copany.project_stage),
+        main_language: String(copany.main_language),
+        license: String(copany.license),
+        created_at: String(copany.created_at),
+        updated_at: copany.updated_at ? String(copany.updated_at) : null,
+      };
+      return item;
+    });
+    setCopanies(typedCopanies);
+    console.log(typedCopanies);
+  }
+
+  // --- View ---
+
   if (status === "loading") {
     return <div className="text-sm font-bold">Loading...</div>;
   }
@@ -54,48 +95,25 @@ export default function CopanyList() {
   }
 
   return (
-    <div>
-      <button
-        className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 border-1 border-gray-300 px-2 mb-2"
-        disabled={authStatus !== "authenticated"}
-        onClick={async () => {
-          if (!session?.user?.id) {
-            signIn();
-            return;
-          }
-          await createCopany({
-            name: "Test Copany",
-            description: "Test Description",
-            github_url: "https://github.com/test.com",
-            created_by: session.user.id,
-            project_type: "Test Project Type",
-            project_stage: "Test Project Stage",
-            main_language: "Test Main Language",
-            license: "Test License",
-          });
-          const copanies = await getCopanies();
-          const typedCopanies: Copany[] = copanies.map((copany) => {
-            const item: Copany = {
-              id: Number(copany.id),
-              github_url: String(copany.github_url),
-              name: String(copany.name),
-              description: String(copany.description),
-              created_by: String(copany.created_by),
-              project_type: String(copany.project_type),
-              project_stage: String(copany.project_stage),
-              main_language: String(copany.main_language),
-              license: String(copany.license),
-              created_at: String(copany.created_at),
-              updated_at: copany.updated_at ? String(copany.updated_at) : null,
-            };
-            return item;
-          });
-          setCopanies(typedCopanies);
-          console.log(typedCopanies);
+    <div className="flex flex-col gap-2">
+      <form
+        action={async (formData) => {
+          await handleCreateCopany(formData);
         }}
+        className="flex gap-2"
       >
-        Create Copany
-      </button>
+        <input
+          type="text"
+          placeholder="Enter github url"
+          className="rounded-md border-1 border-gray-300 px-2 h-fit"
+        />
+        <button
+          className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 border-1 border-gray-300 px-2 mb-2"
+          type="submit"
+        >
+          Create Copany
+        </button>
+      </form>
       <ul className="space-y-6">
         {copanies.map((copany) => (
           <li key={copany.id} className="space-y-2">
