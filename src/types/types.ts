@@ -3,7 +3,7 @@ export interface Copany {
   github_url: string;
   name: string;
   description: string;
-  created_by: number;
+  created_by: string;
   project_type: string;
   project_stage: string;
   main_language: string;

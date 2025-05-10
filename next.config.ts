@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
   /* config options here */
   images: {
-    domains: ["www.w3schools.com"],
+    domains: ["www.w3schools.com", "avatars.githubusercontent.com"],
   },
 };
 

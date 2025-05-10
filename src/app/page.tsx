@@ -27,14 +27,6 @@ async function updateName(formData: FormData): Promise<void> {
 
 export default async function Home() {
   const session = await auth();
-  // const session = {
-  //   user: {
-  //     id: "123",
-  //     name: "John Doe",
-  //     email: "john@example.com",
-  //     image: "https://www.w3schools.com/images/w3schools_green.jpg",
-  //   },
-  // };
 
   return (
     <main>
@@ -82,7 +74,7 @@ export default async function Home() {
               </div>
               <button
                 type="submit"
-                className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 border-1 border-gray-300 px-2"
+                className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 border-1 border-gray-300 px-2"
               >
                 Update Name
               </button>
@@ -97,7 +89,7 @@ export default async function Home() {
           >
             <button
               type="submit"
-              className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 border-1 border-gray-300 px-2"
+              className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 border-1 border-gray-300 px-2"
             >
               Sign in with Github
             </button>
@@ -115,7 +107,7 @@ export default async function Home() {
             >
               <button
                 type="submit"
-                className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 border-1 border-gray-300 mt-2 px-2"
+                className="cursor-pointer rounded-md bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 border-1 border-gray-300 mt-2 px-2"
               >
                 Sign out
               </button>
@@ -123,6 +115,25 @@ export default async function Home() {
           </div>
         )}
         <div className="pt-8">
+          {/* <form
+            action={async () => {
+              "use server";
+              await createCopany({
+                name: "Test Copany",
+                description: "Test Description",
+                github_url: "https://github.com/test.com",
+                created_by: 1,
+                project_type: "Test Project Type",
+                project_stage: "Test Project Stage",
+                main_language: "Test Main Language",
+                license: "Test License",
+              });
+              const copanies = await getCopanies();
+              console.log(copanies);
+            }}
+          >
+            <button type="submit">Create Copany</button>
+          </form> */}
           <CopanyList />
         </div>
       </div>
