@@ -20,19 +20,22 @@ export default function CopanyList() {
   useEffect(() => {
     getCopanies()
       .then((copanies) => {
-        const typedCopanies = copanies.map((copany) => ({
-          id: Number(copany.id),
-          github_url: String(copany.github_url),
-          name: String(copany.name),
-          description: String(copany.description),
-          created_by: String(copany.created_by),
-          project_type: String(copany.project_type),
-          project_stage: String(copany.project_stage),
-          main_language: String(copany.main_language),
-          license: String(copany.license),
-          created_at: String(copany.created_at),
-          updated_at: copany.updated_at ? String(copany.updated_at) : null,
-        }));
+        const typedCopanies: Copany[] = copanies.map((copany) => {
+          const item: Copany = {
+            id: Number(copany.id),
+            github_url: String(copany.github_url),
+            name: String(copany.name),
+            description: String(copany.description),
+            created_by: String(copany.created_by),
+            project_type: String(copany.project_type),
+            project_stage: String(copany.project_stage),
+            main_language: String(copany.main_language),
+            license: String(copany.license),
+            created_at: String(copany.created_at),
+            updated_at: copany.updated_at ? String(copany.updated_at) : null,
+          };
+          return item;
+        });
         setCopanies(typedCopanies);
         setStatus("success");
       })
@@ -71,19 +74,22 @@ export default function CopanyList() {
             license: "Test License",
           });
           const copanies = await getCopanies();
-          const typedCopanies = copanies.map((copany) => ({
-            id: Number(copany.id),
-            github_url: String(copany.github_url),
-            name: String(copany.name),
-            description: String(copany.description),
-            created_by: String(copany.created_by),
-            project_type: String(copany.project_type),
-            project_stage: String(copany.project_stage),
-            main_language: String(copany.main_language),
-            license: String(copany.license),
-            created_at: String(copany.created_at),
-            updated_at: copany.updated_at ? String(copany.updated_at) : null,
-          }));
+          const typedCopanies: Copany[] = copanies.map((copany) => {
+            const item: Copany = {
+              id: Number(copany.id),
+              github_url: String(copany.github_url),
+              name: String(copany.name),
+              description: String(copany.description),
+              created_by: String(copany.created_by),
+              project_type: String(copany.project_type),
+              project_stage: String(copany.project_stage),
+              main_language: String(copany.main_language),
+              license: String(copany.license),
+              created_at: String(copany.created_at),
+              updated_at: copany.updated_at ? String(copany.updated_at) : null,
+            };
+            return item;
+          });
           setCopanies(typedCopanies);
           console.log(typedCopanies);
         }}
